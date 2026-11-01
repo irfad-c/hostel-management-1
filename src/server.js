@@ -1,10 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes.js");
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
+
+app.use(express.json());
+app.use("/api/auth", authRoutes);
 
 const startServer = async () => {
   try {
@@ -13,7 +17,7 @@ const startServer = async () => {
       console.log(`Server running on ${port}`);
     });
   } catch (error) {
-    console.error(error);
+    console.error("Server starting error.",error);
   }
 };
 
