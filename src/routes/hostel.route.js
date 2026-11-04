@@ -3,7 +3,16 @@ const router = express.Router();
 const hostelController = require("../controllers/hostel.controller");
 const validateHostel = require("../validators/hostel.validator.js");
 const handleValidationErrors = require("../middlewares/validator.middleware");
+const authMiddleware = require("../middlewares/auth.middleware.js");
+const authorizeRoles = require("../middlewares/authorize.roles.js");
 
-router.post("/", validateHostel, handleValidationErrors, hostelController);
+router.post(
+  "/",
+  authMiddleware,
+  authorizeRoles("super_admin"),
+  validateHostel,
+  handleValidationErrors,
+  hostelController,
+);
 
 module.exports = router;
