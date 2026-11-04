@@ -1,6 +1,6 @@
 const Hostel = require("../models/hostel.model");
 
-async function hostelController(req, res) {
+async function postHostel(req, res) {
   try {
     const { name, code, hostelType, capacity } = req.body;
     const normalizedCode = code.toUpperCase();
@@ -20,7 +20,7 @@ async function hostelController(req, res) {
       .status(201)
       .json({ message: "New hostel created successfully.", data: hostel });
   } catch (error) {
-    if ((error.code === 11000)) {
+    if (error.code === 11000) {
       return res.status(409).json({ message: "Code already exist." });
     }
     console.error("Error in the hostel creation.", error);
@@ -28,4 +28,16 @@ async function hostelController(req, res) {
   }
 }
 
-module.exports = hostelController;
+async function getHostel(req, res) {
+  try {
+    const data = await Hostel.find();
+    return res
+      .status(200)
+      .json({ message: "Hostel data fetched successfully.", data });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+module.exports = { postHostel, getHostel };
