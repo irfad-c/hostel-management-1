@@ -30,7 +30,22 @@ async function postHostel(req, res) {
 
 async function getHostel(req, res) {
   try {
-    const data = await Hostel.find();
+    const { hostelType } = req.query;
+
+    let typeOfHostels = ["BOYS", "GIRLS"];
+
+    if (hostelType && !typeOfHostels.includes(hostelType)) {
+      return res.status(400).json({ message: "Invalid hostelType" });
+    }
+
+    let filter = {};
+
+    if (hostelType) {
+      filter.hostelType = hostelType;
+    }
+
+    const data = await Hostel.find(filter);
+
     return res
       .status(200)
       .json({ message: "Hostel data fetched successfully.", data });
