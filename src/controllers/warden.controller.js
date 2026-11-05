@@ -23,6 +23,10 @@ async function wardenController(req, res) {
   } catch (error) {
     console.error("Error creating warden", error);
 
+    if (error.code === 11000) {
+      return res.status(409).json({ message: "Email already exist." });
+    }
+
     return res.status(500).json({ message: "Internal server error" });
   }
 }
