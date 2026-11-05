@@ -14,9 +14,12 @@ async function wardenController(req, res) {
       password: hashPassword,
     });
 
+    const wardenData = data.toObject();
+    delete wardenData.password;
+
     return res
       .status(201)
-      .json({ message: "New warden created successfully.", data });
+      .json({ message: "New warden created successfully.", wardenData });
   } catch (error) {
     console.error("Error creating warden", error);
 
