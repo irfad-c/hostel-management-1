@@ -5,12 +5,14 @@ const express = require("express");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth.route.js");
 const hostelRoutes = require("./routes/hostel.route.js");
+const wardenRoutes = require("./routes/warden.route.js");
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/hostels", hostelRoutes);
+app.use("/api/warden", wardenRoutes);
 
 const startServer = async () => {
   try {

@@ -23,4 +23,26 @@ const validateHostel = [
     .toInt(),
 ];
 
-module.exports = validateHostel;
+const validateWarden = [
+  body("name").trim().notEmpty().withMessage("Name is required"),
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is required")
+    .isEmail()
+    .withMessage("Please provide valid email.")
+    .normalizeEmail(),
+  body("phone")
+    .trim()
+    .notEmpty()
+    .withMessage("Phone number is required")
+    .isMobilePhone()
+    .withMessage("Please provide a valid phone number."),
+  body("password")
+    .notEmpty()
+    .withMessage("Password is required")
+    .isLength({ min: 8 })
+    .withMessage("Password must contain atleast 8 characters."),
+];
+
+module.exports = { validateHostel, validateWarden };
