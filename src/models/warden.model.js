@@ -22,6 +22,10 @@ const wardenSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required."],
   },
+  role: {
+    type: String,
+    default: "warden",
+  },
 });
 
 module.exports = mongoose.model("Warden", wardenSchema);
