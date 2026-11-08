@@ -39,7 +39,7 @@ async function assignWarden(req, res) {
     if (!hostelId) {
       return res.status(400).json({ message: "HostelId is required." });
     }
-    const hostelData = await Hostel.findOne({ _id: hostelId });
+    const hostelData = await Hostel.findById(hostelId);
     if (!hostelData) {
       return res.status(404).json({ message: "Hostel doesn't exist." });
     }
@@ -47,7 +47,7 @@ async function assignWarden(req, res) {
     if (!wardenId) {
       return res.status(400).json({ message: "WardenId is required." });
     }
-    const wardenData = await Warden.findOne({ _id: wardenId });
+    const wardenData = await Warden.findById(wardenId);
 
     if (!wardenData) {
       return res.status(404).json({ message: "Warden doesn't exist." });
@@ -62,7 +62,9 @@ async function assignWarden(req, res) {
     if (existingData) {
       return res
         .status(409)
-        .json({ message: "This warden is already assigned to another hostel." });
+        .json({
+          message: "This warden is already assigned to another hostel.",
+        });
     }
 
     const newAssignment = await HostelWarden.create({
