@@ -26,6 +26,10 @@ const wardenSchema = new mongoose.Schema({
     type: String,
     default: "warden",
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 module.exports = mongoose.model("Warden", wardenSchema);

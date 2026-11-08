@@ -31,6 +31,10 @@ const hostelSchema = new mongoose.Schema(
         message: "Capacity must be an integer.",
       },
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,

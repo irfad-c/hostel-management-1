@@ -43,6 +43,10 @@ async function assignWarden(req, res) {
     if (!hostelData) {
       return res.status(404).json({ message: "Hostel doesn't exist." });
     }
+
+    if (hostelData.isActive !== true) {
+      return res.status(403).json({ message: "Hostel is not active" });
+    }
     const { wardenId } = req.body;
     if (!wardenId) {
       return res.status(400).json({ message: "WardenId is required." });
@@ -57,14 +61,16 @@ async function assignWarden(req, res) {
       return res.status(403).json({ message: "User role is not warden" });
     }
 
+    if (wardenData.isActive !== true) {
+      return res.status(403).json({ message: "Warden is not active" });
+    }
+
     const existingData = await HostelWarden.findOne({ wardenId });
 
     if (existingData) {
-      return res
-        .status(409)
-        .json({
-          message: "This warden is already assigned to another hostel.",
-        });
+      return res.status(409).json({
+        message: "This warden is already assigned to another hostel.",
+      });
     }
 
     const newAssignment = await HostelWarden.create({
