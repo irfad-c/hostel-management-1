@@ -6,7 +6,7 @@ const {
   assignWarden,
 } = require("../controllers/warden.controller.js");
 const authMiddleware = require("../middlewares/auth.middleware.js");
-const authorizeRoles = require("../middlewares/authorize.roles");
+const authorizeRoles = require("../middlewares/authorize.middleware.js");
 const { validateWarden } = require("../validators/hostel.validator.js");
 const handleValidationErrors = require("../middlewares/validator.middleware.js");
 
