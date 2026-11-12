@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth.route.js");
 const hostelRoutes = require("./routes/hostel.route.js");
 const wardenRoutes = require("./routes/warden.route.js");
+const auditRoutes = require("./routes/audit.route.js");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/hostels", hostelRoutes);
 app.use("/api/warden", wardenRoutes);
+app.use("/api/audit-logs", auditRoutes);
 
 const startServer = async () => {
   try {

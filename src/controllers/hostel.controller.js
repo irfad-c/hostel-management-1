@@ -1,4 +1,5 @@
 const Hostel = require("../models/hostel.model");
+const Audit = require("../models/audit.model");
 
 async function postHostel(req, res) {
   try {
@@ -16,6 +17,19 @@ async function postHostel(req, res) {
       hostelType,
       capacity,
     });
+
+    await Audit.create({
+      actorId: req.user.id,
+      action: "HOSTEL_CREATED",
+      entityId: hostel._id,
+      details: {
+        name: hostel.name,
+        hostelCode: hostel.code,
+        hostelType: hostel.hostelType,
+        capacity: hostel.capacity,
+      },
+    });
+
     return res
       .status(201)
       .json({ message: "New hostel created successfully.", data: hostel });

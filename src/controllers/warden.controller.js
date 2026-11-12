@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const Warden = require("../models/warden.model");
 const HostelWarden = require("../models/hostelWarden.model");
 const Hostel = require("../models/hostel.model");
+const Audit = require("../models/audit.model");
 
 async function createWarden(req, res) {
   try {
@@ -76,6 +77,18 @@ async function assignWarden(req, res) {
     const newAssignment = await HostelWarden.create({
       wardenId,
       hostelId,
+    });
+
+    await Audit.create({
+      actorId: req.user.id,
+      action: "WARDEN_ASSIGNED",
+      entityId: hostelData._id,
+      details: {
+        name: hostelData.name,
+        hostelCode: hostelData.code,
+        hostelType: hostelData.hostelType,
+        capacity: hostelData.capacity,
+      },
     });
 
     return res.status(201).json({
