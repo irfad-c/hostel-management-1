@@ -25,6 +25,7 @@ const validateHostel = [
 
 const validateWarden = [
   body("name").trim().notEmpty().withMessage("Name is required"),
+
   body("email")
     .trim()
     .notEmpty()
@@ -32,12 +33,14 @@ const validateWarden = [
     .isEmail()
     .withMessage("Please provide valid email.")
     .normalizeEmail(),
+
   body("phone")
     .trim()
     .notEmpty()
     .withMessage("Phone number is required")
     .isMobilePhone()
     .withMessage("Please provide a valid phone number."),
+
   body("password")
     .notEmpty()
     .withMessage("Password is required")

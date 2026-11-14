@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const Warden = require("../models/warden.model");
+const User = require("../models/user.model");
 const HostelWarden = require("../models/hostelWarden.model");
 const Hostel = require("../models/hostel.model");
 const Audit = require("../models/audit.model");
@@ -10,11 +10,12 @@ async function createWarden(req, res) {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
-    const data = await Warden.create({
+    const data = await User.create({
       name,
       email,
       phone,
       password: hashPassword,
+      role: "warden",
     });
 
     const wardenData = data.toObject();
@@ -37,6 +38,7 @@ async function createWarden(req, res) {
 async function assignWarden(req, res) {
   try {
     const { hostelId } = req.params;
+    const { wardenId } = req.body;
     if (!hostelId) {
       return res.status(400).json({ message: "HostelId is required." });
     }
@@ -48,7 +50,7 @@ async function assignWarden(req, res) {
     if (hostelData.isActive !== true) {
       return res.status(403).json({ message: "Hostel is not active" });
     }
-    const { wardenId } = req.body;
+
     if (!wardenId) {
       return res.status(400).json({ message: "WardenId is required." });
     }

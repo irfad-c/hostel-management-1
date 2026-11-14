@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+      trim: true,
+      required: [true, "Phone number is required."],
+    },
     role: {
       type: String,
       enum: ["super_admin", "admin", "warden"],
